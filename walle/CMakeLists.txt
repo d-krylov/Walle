@@ -1,5 +1,6 @@
 set(WALLE_SOURCES
   ${PROJECT_SOURCE_DIR}/walle/graphics/graphics_types/graphics_enums.cpp
+  ${PROJECT_SOURCE_DIR}/walle/graphics/graphics_types/graphics_formats.cpp
   ${PROJECT_SOURCE_DIR}/walle/graphics/device/instance.cpp
   ${PROJECT_SOURCE_DIR}/walle/graphics/device/device_tools.cpp
 )

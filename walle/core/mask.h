@@ -42,6 +42,10 @@ public:
 
   constexpr Mask<MaskBit> operator^(const Mask<MaskBit> &rhs) const { return Mask<MaskBit>(mask_ ^ rhs.mask_); }
 
+  explicit constexpr operator bool() const { return !!mask_; }
+
+  explicit constexpr operator MaskType() const { return mask_; }
+
 private:
   MaskType mask_;
 };
