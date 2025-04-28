@@ -134,7 +134,6 @@ using ColorComponentMask = Mask<ColorComponentMaskBit>;
 using ExternalFenceFeatureMask = Mask<ExternalFenceFeatureMaskBit>;
 using CommandPoolTrimMask = Mask<Flags>;
 using XcbSurfaceCreateMask = Mask<Flags>;
-using GeometryInstanceMask = Mask<GeometryInstanceMaskBit>;
 using CommandPoolResetMask = Mask<CommandPoolResetMaskBit>;
 using SubgroupFeatureMask = Mask<SubgroupFeatureMaskBit>;
 using BuildAccelerationStructureMask = Mask<BuildAccelerationStructureMaskBit>;
@@ -199,10 +198,17 @@ using ExternalSemaphoreFeatureMask = Mask<ExternalSemaphoreFeatureMaskBit>;
 using ExternalSemaphoreHandleTypeMask = Mask<ExternalSemaphoreHandleTypeMaskBit>;
 using SurfaceCounterMask = Mask<SurfaceCounterMaskBit>;
 using PipelineDiscardRectangleStateCreateMask = Mask<Flags>;
+using GeometryInstanceMask = VkGeometryInstanceFlagsKHR;
 
 using DebugMessengerCreateMask = DebugUtilsMessengerCreateMask;
 using DebugMessageSeverityMask = DebugUtilsMessageSeverityMask;
 using DebugMessageTypeMask = DebugUtilsMessageTypeMask;
+
+using DebugMessengerCallback = PFN_vkDebugUtilsMessengerCallbackEXT;
+using bool32 = VkBool32;
+using SampleMask = VkSampleMask;
+using DeviceSize = VkDeviceSize;
+using DeviceAddress = VkDeviceAddress;
 
 } // namespace Walle
 

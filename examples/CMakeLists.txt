@@ -1,5 +1,6 @@
 set(EXECUTABLES
   instance
+  enumerate_devices
   triangle
 )
 
