@@ -1,17 +1,7 @@
 #include "device_tools.h"
-#include "core/type_tools.h"
+#include <ranges>
 
 namespace Walle {
-
-template <typename FUNCTION, typename... ARGUMENTS> auto Enumerate(FUNCTION &&enumerate_function, ARGUMENTS &&...arguments) {
-  using R = FunctionTraits<std::remove_pointer_t<decltype(&enumerate_function)>>::arguments_t;
-  using V = std::remove_pointer_t<std::tuple_element_t<std::tuple_size_v<R> - 1, R>>;
-  auto count{0u};
-  std::forward<FUNCTION>(enumerate_function)(std::forward<ARGUMENTS>(arguments)..., &count, nullptr);
-  std::vector<V> ret(count);
-  std::forward<FUNCTION>(enumerate_function)(std::forward<ARGUMENTS>(arguments)..., &count, ret.data());
-  return ret;
-}
 
 std::vector<VkPhysicalDevice> EnumeratePhysicalDevices(const VkInstance instance) {
   return Enumerate(vkEnumeratePhysicalDevices, instance);
@@ -37,8 +27,6 @@ std::vector<ExtensionProperties> EnumerateDeviceExtensionProperties(const VkPhys
   return {properties.begin(), properties.end()};
 }
 
-std::vector<PresentMode> EnumeratePhysicalDeviceSurfacePresentModes() {}
-
 std::vector<SurfaceFormatKHR> EnumeratePhysicalDeviceSurfaceFormats(const VkPhysicalDevice device, const VkSurfaceKHR surface) {
   auto formats = Enumerate(vkGetPhysicalDeviceSurfaceFormatsKHR, device, surface);
   return {formats.begin(), formats.end()};
@@ -48,5 +36,19 @@ std::vector<QueueFamilyProperties> EnumeratePhysicalDeviceQueueFamilyProperties(
   auto properties = Enumerate(vkGetPhysicalDeviceQueueFamilyProperties, device);
   return {properties.begin(), properties.end()};
 }
+
+auto to_present_mode = [](VkPresentModeKHR present_mode) { return static_cast<PresentMode>(present_mode); };
+
+// clang-format off
+std::vector<PresentMode> EnumeratePhysicalDeviceSurfacePresentModes(const VkPhysicalDevice device, const VkSurfaceKHR surface) {
+  auto present_modes = Enumerate(vkGetPhysicalDeviceSurfacePresentModesKHR, device, surface);
+  return present_modes 
+    | std::views::transform(to_present_mode) 
+    | std::ranges::to<std::vector>();
+}
+
+// clang-format on
+
+void VK_CHECK(VkResult result, std::source_location source_location) {}
 
 } // namespace Walle

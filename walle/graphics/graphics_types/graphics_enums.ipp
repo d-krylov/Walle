@@ -3,8 +3,6 @@
 
 namespace Walle {
 
-void VK_CHECK(VkResult result, std::source_location = std::source_location::current());
-
 using DebugMessageSeverityMaskBit = DebugUtilsMessageSeverityMaskBit;
 using DebugMessageTypeMaskBit = DebugUtilsMessageTypeMaskBit;
 using LogicOperation = LogicOp;
@@ -150,7 +148,6 @@ using FormatFeatureMask2 = Mask<FormatFeatureMaskBit2>;
 using SamplerCreateMask = Mask<SamplerCreateMaskBit>;
 using DeviceDiagnosticsConfigMask = Mask<DeviceDiagnosticsConfigMaskBit>;
 using BufferViewCreateMask = Mask<Flags>;
-using RefreshObjectMask = Mask<RefreshObjectMaskBit>;
 using PipelineShaderStageCreateMask = Mask<PipelineShaderStageCreateMaskBit>;
 using PipelineStageMask2 = Mask<PipelineStageMaskBit2>;
 using AccelerationStructureMotionInstanceMask = Mask<Flags>;
@@ -204,11 +201,17 @@ using DebugMessengerCreateMask = DebugUtilsMessengerCreateMask;
 using DebugMessageSeverityMask = DebugUtilsMessageSeverityMask;
 using DebugMessageTypeMask = DebugUtilsMessageTypeMask;
 
-using DebugMessengerCallback = PFN_vkDebugUtilsMessengerCallbackEXT;
 using bool32 = VkBool32;
 using SampleMask = VkSampleMask;
 using DeviceSize = VkDeviceSize;
 using DeviceAddress = VkDeviceAddress;
+
+struct DebugUtilsMessengerCallbackDataEXT;
+
+using DebugMessengerCallback = bool32(VKAPI_PTR *)(DebugUtilsMessageSeverityMaskBit message_severity,
+                                                   DebugMessageTypeMask message_types,
+                                                   const DebugUtilsMessengerCallbackDataEXT *callback_data,
+                                                   void *user_data);
 
 } // namespace Walle
 
