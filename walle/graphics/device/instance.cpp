@@ -20,18 +20,22 @@ VkInstance CreateInstance(uint32_t api_version,
                           uint32_t engine_version) {
 
   VK_CHECK(volkInitialize());
-
   ApplicationInfo application_info(api_version, application_name.data(), application_version, engine_name.data(), engine_version);
-  // DebugMessengerCreateInfo debug_messenger_ci(severity_mask, type_mask, DebugCallback);
   InstanceCreateInfo instance_ci(&application_info, required_layers, required_extensions);
-
   VkInstance instance{VK_NULL_HANDLE};
-
   VK_CHECK(vkCreateInstance(instance_ci.get(), nullptr, &instance));
-
   volkLoadInstanceOnly(instance);
-
   return instance;
+}
+
+VkDebugUtilsMessengerEXT CreateDebugMessenger(const VkInstance instance,
+                                              DebugMessageTypeMask debug_type,
+                                              DebugMessageSeverityMask debug_severity,
+                                              DebugMessengerCallback callback) {
+  VkDebugUtilsMessengerEXT debug_messenger{VK_NULL_HANDLE};
+  DebugMessengerCreateInfo debug_messenger_ci(debug_severity, debug_type, callback == nullptr ? DebugCallback : callback);
+  VK_CHECK(vkCreateDebugUtilsMessengerEXT(instance, debug_messenger_ci.get(), nullptr, &debug_messenger));
+  return debug_messenger;
 }
 
 } // namespace Walle

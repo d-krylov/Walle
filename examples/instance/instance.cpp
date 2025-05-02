@@ -48,7 +48,7 @@ int main() {
     auto queues = Walle::GetPhysicalDeviceQueueIndices(device);
 
     for (auto queue : queues) {
-      std::cout << (uint32_t)queue.first << " " << queue.second << std::endl;
+      std::cout << Walle::ToString(queue.first) << " " << queue.second << std::endl;
     }
   }
 
