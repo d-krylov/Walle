@@ -25,13 +25,15 @@ int main() {
   Walle::DebugMessengerCreateInfo debug_messenger(severity_mask, type_mask, DebugCallback);
 
   Walle::ApplicationInfo application_info(VK_API_VERSION_1_3, "instance", VK_MAKE_VERSION(1, 0, 0), "walle", VK_MAKE_VERSION(1, 0, 0));
-  Walle::InstanceCreateInfo instance_ci(&application_info, required_layers, required_extensions, &debug_messenger);
+  Walle::InstanceCreateInfo instance_ci(&application_info, required_layers, required_extensions);
+
+  Walle::StructureChain<Walle::InstanceCreateInfo, Walle::DebugMessengerCreateInfo> chain(instance_ci, debug_messenger);
 
   VkInstance instance;
 
   Walle::VK_CHECK(volkInitialize());
 
-  Walle::VK_CHECK(vkCreateInstance(instance_ci.get(), nullptr, &instance));
+  Walle::VK_CHECK(vkCreateInstance(chain.Get().get(), nullptr, &instance));
 
   volkLoadInstanceOnly(instance);
 

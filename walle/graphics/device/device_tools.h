@@ -26,6 +26,7 @@ std::vector<PresentMode> EnumeratePhysicalDeviceSurfacePresentModes(const VkPhys
 std::vector<SurfaceFormatKHR> EnumeratePhysicalDeviceSurfaceFormats(const VkPhysicalDevice device, const VkSurfaceKHR surface);
 std::vector<ExtensionProperties> EnumerateDeviceExtensionProperties(const VkPhysicalDevice device, std::string_view layer = {});
 std::vector<QueueFamilyProperties> EnumeratePhysicalDeviceQueueFamilyProperties(const VkPhysicalDevice device);
+std::vector<std::pair<QueueMask, uint32_t>> GetPhysicalDeviceQueueIndices(const VkPhysicalDevice device);
 
 void VK_CHECK(VkResult result, std::source_location = std::source_location::current());
 
